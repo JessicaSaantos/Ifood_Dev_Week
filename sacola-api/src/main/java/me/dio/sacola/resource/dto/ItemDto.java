@@ -1,4 +1,4 @@
-package me.dio.sacola.resource;
+package me.dio.sacola.resource.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

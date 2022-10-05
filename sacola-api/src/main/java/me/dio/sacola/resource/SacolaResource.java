@@ -2,11 +2,10 @@ package me.dio.sacola.resource;
 
 import lombok.RequiredArgsConstructor;
 import me.dio.sacola.model.Item;
+import me.dio.sacola.model.Sacola;
+import me.dio.sacola.resource.dto.ItemDto;
 import me.dio.sacola.service.SacolaService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ifood-devweek/sacolas")
@@ -18,5 +17,16 @@ public class SacolaResource {
     @PostMapping
     public Item incluirItemSacola(@RequestBody ItemDto itemDto) {
         return sacolaService.incluirItemSacola(itemDto);
+    }
+
+    @GetMapping("/{id}")
+    public Sacola verSacola(@PathVariable("id") Long id){
+        return sacolaService.verSacola(id);
+    }
+
+    @PatchMapping("/fecharSacola/{sacolaId}")
+    public Sacola fecharSacola(@PathVariable("sacolaId") Long sacolaId,
+                               @RequestParam("formaPagamento") int formaPagamento) {
+        return sacolaService.fecharSacola(sacolaId, formaPagamento);
     }
 }
