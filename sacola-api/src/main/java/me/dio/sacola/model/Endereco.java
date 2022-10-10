@@ -18,5 +18,5 @@ import javax.persistence.Entity;
 
 public class Endereco {
     private String cep;
-    private String cpmplemento;
+    private String complemento;
 }

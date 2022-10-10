@@ -20,10 +20,10 @@ import java.util.List;
 public class Sacola {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  Long id;
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JsonIgnore
-    private  Cliente cliente;
+    private Cliente cliente;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Item> itens;
     private Double valorTotal;
