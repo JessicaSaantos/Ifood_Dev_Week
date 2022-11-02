@@ -12,6 +12,7 @@ import me.dio.sacola.resource.dto.ItemDto;
 import me.dio.sacola.service.SacolaService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,13 +50,24 @@ public class SacolaServiceImpl implements SacolaService {
                 itensDaSacola.add(itemParaSerInserido);
             } else {
                 throw new RuntimeException("Não é possível adicionar produtos de restaurantes diferentes. " +
-                        "                   Conclua ou cancele!");
+                                            "Conclua ou cancele!");
             }
         }
 
-        sacolaRepository.save(sacola);
+        List<Double> valorDosItens = new ArrayList<>();
+        for(Item itemDaSacola: itensDaSacola){
+            double valorTotalItem =
+                    itemDaSacola.getProduto().getValorUnitario() * itemDaSacola.getQuantidade();
+            valorDosItens.add(valorTotalItem);
+        }
 
-        return itemRepository.save(itemParaSerInserido);
+        double valorTotalSacola = valorDosItens.stream()
+                .mapToDouble(valorTotalDeCadaItem -> valorTotalDeCadaItem)
+                .sum();
+
+        sacola.setValorTotal(valorTotalSacola);
+        sacolaRepository.save(sacola);
+        return itemParaSerInserido;
     }
 
     @Override
